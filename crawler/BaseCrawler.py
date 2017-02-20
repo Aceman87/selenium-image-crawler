@@ -84,13 +84,19 @@ class BaseCrawler(ABC):
     def run(self):
         
         for search in self.g_search_key_list:
+            print ("Searching:\"", search,"\"")
             self.pic_url_list = []
             self.pic_info_list = []
             self.g_search_key = search
             self.formed_search_url()
+            print ("Creating driver...")
+            # this should probably be taken out of the loop
             driver = self.create_selenium_driver()
+            print ("Loading page...")
             self.load_page(driver)
+            print ("Extracting picture URLs...")
             self.extract_pic_url(driver)
+            print ("Processing images...")
             self.process_all_images()
 
     def process_all_images(self):
