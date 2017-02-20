@@ -8,7 +8,7 @@ class YandexCrawler(BaseCrawler):
         super().__init__(search_key, **kwargs)
 
         # google search specific url parameters
-        self.search_url_prefix = kwargs.get('search_url_prefix', 'https://yandex.com.tr/gorsel/search?text=')
+        self.search_url_prefix = kwargs.get('search_url_prefix', 'https://yandex.com/images/search?text=')
         self.search_url_postfix = kwargs.get('search_url_postfix', '')
 
         # show more options
