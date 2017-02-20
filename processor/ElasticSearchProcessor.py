@@ -27,7 +27,8 @@ def index_image(image, file_name, index_name, metadata):
     thumbnail_size = 128, 128
     image.thumbnail(thumbnail_size)
     output = BytesIO()
-    image.save(output, format="JPEG", quality=66, optimize=True)
+    #Added convert RGB to bypass "cannot write mode P as JPEG"
+    image.convert('RGB').save(output, format="JPEG", quality=66, optimize=True)
     img_base64 = base64.b64encode(output.getvalue())
     output.close()
     uid = generate_guid()
