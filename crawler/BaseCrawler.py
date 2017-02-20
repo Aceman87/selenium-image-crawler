@@ -96,10 +96,12 @@ class BaseCrawler(ABC):
             self.load_page(driver)
             print ("Extracting picture URLs...")
             self.extract_pic_url(driver)
-            print ("Processing images...")
+            print ("Processing ",len(self.pic_url_list)," images...")
             self.process_all_images()
+            print ("Done")
 
     def process_all_images(self):
+        process_count = 0
 
         for processor in self.processor_list:
             processor.before_process()
@@ -108,6 +110,9 @@ class BaseCrawler(ABC):
         for preview_url, original_url in self.pic_url_list:
             for processor in self.processor_list:
                 processor.process(preview_url, original_url, search_term)
+            process_count += 1
+            if process_count%10 == 0:
+                print (process_count," processed")
 
         for processor in self.processor_list:
             processor.after_process()
