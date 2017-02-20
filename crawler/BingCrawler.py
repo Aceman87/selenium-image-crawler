@@ -1,6 +1,6 @@
 import time
 from crawler.BaseCrawler import BaseCrawler
-
+from selenium import webdriver
 
 class BingCrawler(BaseCrawler):
 
@@ -19,6 +19,10 @@ class BingCrawler(BaseCrawler):
         # image options
         self.preview_image_class = kwargs.get('preview_image_class', 'mimg')
         self.original_image_class = kwargs.get('original_image_class', 'iusc')
+
+    def create_selenium_driver(self):
+        driver = webdriver.Firefox()
+        return driver
 
     def extract_pic_url(self, driver):
         """ extract all the raw pic url in list
