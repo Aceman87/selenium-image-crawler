@@ -13,7 +13,6 @@ class DownloadProcessor(BaseProcessor):
         self.process_count = process_count
 
     def before_process(self):
-        self.create_folder()
         self.pic_counter = 1
 
         self.preview_urls = []
@@ -22,7 +21,9 @@ class DownloadProcessor(BaseProcessor):
 
     def process(self, preview_image_url, original_image_url, search_term):
         self.search_term = search_term
-        pic_prefix_str = search_term + str(self.pic_counter)
+        self.create_folder()
+        # image filename
+        pic_prefix_str = search_term + "_" + str(self.pic_counter)
         if preview_image_url:
             self.preview_urls.append(preview_image_url)
             self.original_urls.append(original_image_url)
@@ -54,6 +55,7 @@ class DownloadProcessor(BaseProcessor):
         # info_list = self.pic_info_list
         # info_list.append(pic_prefix_str + ': ' + url_link)
 
+        # info filename
         info_txt_path = os.path.join(self.gs_raw_dirpath, self.search_term + '_info.txt')
 
         try:
@@ -89,7 +91,7 @@ class DownloadProcessor(BaseProcessor):
             Create a folder to put the log data segregate by date
 
         """
-        self.gs_raw_dirpath = os.path.join(self.output_directory, time.strftime("_%d_%b%y", time.localtime()))
+        self.gs_raw_dirpath = os.path.join(self.output_directory, time.strftime("%d_%b_%Y", time.localtime()), self.search_term)
         if not os.path.exists(self.gs_raw_dirpath):
             os.makedirs(self.gs_raw_dirpath)
 
